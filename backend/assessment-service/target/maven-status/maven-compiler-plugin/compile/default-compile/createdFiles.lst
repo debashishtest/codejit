@@ -1,0 +1,15 @@
+com/codejit/assessment/config/GlobalExceptionHandler.class
+com/codejit/assessment/repository/AssessmentRepository.class
+com/codejit/assessment/entity/TestCase$Builder.class
+com/codejit/assessment/AssessmentServiceApplication.class
+com/codejit/assessment/entity/CodingQuestion.class
+com/codejit/assessment/entity/Assessment$Builder.class
+com/codejit/assessment/entity/TestCase.class
+com/codejit/assessment/entity/CodingQuestion$Builder.class
+com/codejit/assessment/repository/TestCaseRepository.class
+com/codejit/assessment/repository/CodingQuestionRepository.class
+com/codejit/assessment/config/RedisConfig.class
+com/codejit/assessment/entity/Assessment.class
+com/codejit/assessment/controller/AssessmentController.class
+com/codejit/assessment/service/ShareCodeGenerator.class
+com/codejit/assessment/service/AssessmentService.class

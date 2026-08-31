@@ -1,0 +1,76 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # Auth Service Public Routes (Register / Login)
+        - id: auth-service-public
+          uri: http://${AUTH_SERVICE_HOST:localhost}:${AUTH_SERVICE_PORT:8081}
+          predicates:
+            - Path=/api/v1/public/**
+
+        # Auth Service Authenticated Routes (/me)
+        - id: auth-service-auth
+          uri: http://${AUTH_SERVICE_HOST:localhost}:${AUTH_SERVICE_PORT:8081}
+          predicates:
+            - Path=/api/v1/auth/**
+          filters:
+            - name: JwtAuthenticationGatewayFilter
+
+        # Code Execution & Run / Submit (takes precedence before assessment generic path)
+        - id: execution-service-run
+          uri: http://${EXECUTION_SERVICE_HOST:localhost}:${EXECUTION_SERVICE_PORT:8083}
+          predicates:
+            - Path=/api/v1/assessments/{assessmentId}/questions/{questionId}/run
+          filters:
+            - name: JwtAuthenticationGatewayFilter
+
+        - id: execution-service-submit
+          uri: http://${EXECUTION_SERVICE_HOST:localhost}:${EXECUTION_SERVICE_PORT:8083}
+          predicates:
+            - Path=/api/v1/assessments/{assessmentId}/questions/{questionId}/submit
+          filters:
+            - name: JwtAuthenticationGatewayFilter
+
+        - id: execution-service-submissions
+          uri: http://${EXECUTION_SERVICE_HOST:localhost}:${EXECUTION_SERVICE_PORT:8083}
+          predicates:
+            - Path=/api/v1/submissions/**
+          filters:
+            - name: JwtAuthenticationGatewayFilter
+
+        # Assessment Service Routes
+        - id: assessment-service
+          uri: http://${ASSESSMENT_SERVICE_HOST:localhost}:${ASSESSMENT_SERVICE_PORT:8082}
+          predicates:
+            - Path=/api/v1/assessments/**
+          filters:
+            - name: JwtAuthenticationGatewayFilter
+
+        # Interview Service REST Routes
+        - id: interview-service-rest
+          uri: http://${INTERVIEW_SERVICE_HOST:localhost}:${INTERVIEW_SERVICE_PORT:8084}
+          predicates:
+            - Path=/api/v1/interviews/**
+          filters:
+            - name: JwtAuthenticationGatewayFilter
+
+        # Interview Service Real-time WebSockets
+        - id: interview-service-ws
+          uri: ws://${INTERVIEW_SERVICE_HOST:localhost}:${INTERVIEW_SERVICE_PORT:8084}
+          predicates:
+            - Path=/ws/**
+
+jwt:
+  secret: ${JWT_SECRET:codejit-super-secret-key-that-is-at-least-256-bits-long-for-hmac-sha-256-production-signing}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

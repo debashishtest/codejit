@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root { font-family: 'Manrope', sans-serif; color: #e7e8ee; background: #0b0d11; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #f3c969; color: #13110b; }
+.mono { font-family: 'DM Mono', monospace; }
+.grid-noise { background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 32px 32px; }
+.slide-in { animation: slide-in .45s ease both; }
+@keyframes slide-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

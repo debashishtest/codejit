@@ -1,0 +1,8 @@
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/AuthServiceApplication.java
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/config/GlobalExceptionHandler.java
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/config/SecurityConfig.java
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/controller/AuthController.java
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/entity/Role.java
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/entity/User.java
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/repository/UserRepository.java
+/Users/dev/Desktop/codejit/backend/auth-service/src/main/java/com/codejit/auth/service/AuthService.java

@@ -1,0 +1,4 @@
+com/codejit/gateway/filter/JwtAuthenticationGatewayFilter$Config.class
+com/codejit/gateway/config/CorsConfig.class
+com/codejit/gateway/filter/JwtAuthenticationGatewayFilter.class
+com/codejit/gateway/ApiGatewayApplication.class

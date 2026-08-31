@@ -1,0 +1,12 @@
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/AssessmentServiceApplication.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/config/GlobalExceptionHandler.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/config/RedisConfig.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/controller/AssessmentController.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/entity/Assessment.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/entity/CodingQuestion.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/entity/TestCase.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/repository/AssessmentRepository.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/repository/CodingQuestionRepository.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/repository/TestCaseRepository.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/service/AssessmentService.java
+/Users/dev/Desktop/codejit/backend/assessment-service/src/main/java/com/codejit/assessment/service/ShareCodeGenerator.java

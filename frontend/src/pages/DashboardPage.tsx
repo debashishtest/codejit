@@ -1,0 +1,22 @@
+import { useEffect, useState, type ReactNode } from 'react'
+import { Activity, ArrowUpRight, BookOpen, FilePlus2, Search, ShieldCheck, Users, type LucideIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { api, type AssessmentSummary } from '../api'
+
+type MetricProps = { label: string; value: string; detail: string; icon: ReactNode }
+
+export function DashboardPage() {
+  const [items, setItems] = useState<AssessmentSummary[]>([])
+  const [query, setQuery] = useState('')
+  const [error, setError] = useState('')
+  useEffect(() => { api.assessments().then(setItems).catch((err) => setError(err instanceof Error ? err.message : 'Unable to load assessments')) }, [])
+  const filtered = items.filter((item) => item.title.toLowerCase().includes(query.toLowerCase()))
+  const metrics: Array<[string, string, string, LucideIcon]> = [
+    ['Active candidates', '—', 'API metric pending', Users],
+    ['Assessments live', String(items.filter((item) => item.status === 'STARTED').length).padStart(2, '0'), `${items.length} total`, Activity],
+    ['Average score', '—', 'Submission analytics pending', ShieldCheck],
+  ]
+  return <div className="grid-noise min-h-[calc(100vh-76px)] px-5 py-8 sm:px-8 lg:px-10 lg:py-12"><div className="mx-auto max-w-[1200px] slide-in"><header className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><p className="mono mb-3 text-[10px] uppercase tracking-[.24em] text-[#f3c969]">Assessment control</p><h1 className="text-3xl font-extrabold tracking-[-.06em] text-white sm:text-[42px]">Your assessment room<span className="text-[#f3c969]">.</span></h1><p className="mt-2 text-sm text-[#858a98]">Build, share, and review coding sessions.</p></div><Link to="/assessments/new" className="flex items-center justify-center gap-2 bg-[#f3c969] px-4 py-3 text-sm font-extrabold text-[#15130d]"><FilePlus2 size={17} /> New assessment</Link></header><div className="mt-10 grid gap-px border border-white/[.08] bg-white/[.08] sm:grid-cols-3">{metrics.map(([label, value, detail, Icon]) => <Metric key={label} label={label} value={value} detail={detail} icon={<Icon size={17} />} />)}</div><div className="mt-12 flex flex-col justify-between gap-4 sm:flex-row sm:items-center"><div><h2 className="text-xl font-extrabold text-white">Your assessments</h2><p className="mt-1 text-sm text-[#858a98]">Select an assessment to manage its questions.</p></div><label className="flex items-center gap-2 border border-white/[.1] bg-[#11141a] px-3 py-2 text-sm text-[#858a98]"><Search size={16} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Filter assessments" className="w-36 bg-transparent outline-none placeholder:text-[#5e6370]" /></label></div>{error && <p className="mt-5 border border-[#683d38] bg-[#241716] p-3 text-xs text-[#f08c7d]">{error}</p>}<div className="mt-5 grid gap-4 xl:grid-cols-3">{filtered.map((item) => <Link to={`/assessments/${item.id}`} key={item.id} className="group border border-white/[.08] bg-[#11141a] p-5 hover:-translate-y-1 hover:border-[#f3c969]/60"><div className="flex justify-between"><span className="mono border border-[#f3c969]/40 px-2 py-1 text-[10px] text-[#f3c969]">{item.status}</span><ArrowUpRight size={17} className="text-[#626774] group-hover:text-[#f3c969]" /></div><h3 className="mt-8 text-lg font-extrabold text-white">{item.title}</h3><div className="mt-6 flex gap-4 text-xs text-[#858a98]"><span><BookOpen className="mr-1 inline" size={14} />{item.questionCount} questions</span><span><Users className="mr-1 inline" size={14} />Candidates</span></div><div className="mt-5 border-t border-white/[.07] pt-4"><span className="mono text-[10px] text-[#686d7a]">DURATION </span><span className="mono text-xs text-[#d5d7df]">{item.durationMinutes} min</span></div></Link>)}{filtered.length === 0 && !error && <div className="border border-dashed border-white/[.14] p-10 text-sm text-[#858a98]">No assessments yet. Create your first room.</div>}</div></div></div>
+}
+
+function Metric({ label, value, detail, icon }: MetricProps) { return <div className="bg-[#11141a] p-5"><div className="flex items-center justify-between text-[#7f8492]"><span className="text-xs font-bold uppercase tracking-[.1em]">{label}</span>{icon}</div><div className="mt-5 flex items-end gap-3"><span className="text-3xl font-extrabold tracking-[-.06em] text-white">{value}</span><span className="text-xs font-semibold text-[#89a96b]">{detail}</span></div></div> }

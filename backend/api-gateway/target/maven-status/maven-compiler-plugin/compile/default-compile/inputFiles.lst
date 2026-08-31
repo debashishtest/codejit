@@ -1,0 +1,3 @@
+/Users/dev/Desktop/codejit/backend/api-gateway/src/main/java/com/codejit/gateway/ApiGatewayApplication.java
+/Users/dev/Desktop/codejit/backend/api-gateway/src/main/java/com/codejit/gateway/config/CorsConfig.java
+/Users/dev/Desktop/codejit/backend/api-gateway/src/main/java/com/codejit/gateway/filter/JwtAuthenticationGatewayFilter.java
