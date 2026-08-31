@@ -15,24 +15,38 @@ import { InterviewJoinPage } from './pages/InterviewJoinPage'
 import { LiveInterviewPage } from './pages/LiveInterviewPage'
 
 function App() {
-  return <BrowserRouter><AuthProvider><NotificationProvider><Routes>
-    <Route path="/" element={<LandingPage />} />
-    <Route path="/login" element={<AuthPage mode="login" />} />
-    <Route path="/register" element={<AuthPage mode="register" />} />
-    <Route element={<ProtectedRoute />}><Route element={<AppShell />}>
-      <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/interviews" element={<InterviewSchedulePage />} />
-      <Route path="/interviews/join" element={<InterviewJoinPage />} />
-      <Route path="/interviews/:id/live" element={<LiveInterviewPage />} />
-      <Route path="/join" element={<JoinPage />} />
-      <Route path="/assessments/new" element={<CreateAssessmentPage />} />
-      <Route path="/assessments/:id" element={<AssessmentDetailPage />} />
-      <Route path="/assessments/:id/solve" element={<SolvePage />} />
-      <Route path="/candidates" element={<DashboardPage />} />
-      <Route path="/activity" element={<DashboardPage />} />
-      <Route path="/settings" element={<DashboardPage />} />
-    </Route></Route>
-    <Route path="*" element={<Navigate to="/" replace />} />
-  </Routes></NotificationProvider></AuthProvider></BrowserRouter>
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <NotificationProvider>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<AuthPage mode="login" />} />
+            <Route path="/register" element={<AuthPage mode="register" />} />
+            
+            <Route element={<ProtectedRoute />}>
+              <Route element={<AppShell />}>
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/interviews" element={<InterviewSchedulePage />} />
+                <Route path="/interviews/join" element={<InterviewJoinPage />} />
+                <Route path="/interviews/:id" element={<LiveInterviewPage />} />
+                <Route path="/interviews/:id/live" element={<LiveInterviewPage />} />
+                <Route path="/join" element={<JoinPage />} />
+                <Route path="/assessments/new" element={<CreateAssessmentPage />} />
+                <Route path="/assessments/:id" element={<AssessmentDetailPage />} />
+                <Route path="/assessments/:id/solve" element={<SolvePage />} />
+                <Route path="/candidates" element={<DashboardPage />} />
+                <Route path="/activity" element={<DashboardPage />} />
+                <Route path="/settings" element={<DashboardPage />} />
+              </Route>
+            </Route>
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </NotificationProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  )
 }
+
 export default App

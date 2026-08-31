@@ -60,13 +60,14 @@ public class InterviewService {
                 .scheduledEnd(request.getScheduledEnd() != null ? request.getScheduledEnd() : LocalDateTime.now().plusHours(1).toString())
                 .status(InterviewStatus.SCHEDULED)
                 .boardSnapshot("")
-                .editorSnapshot("// Start collaborative coding session\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"Hello CodeJIT\");\n    }\n}")
+                .editorSnapshot("// Collaborative interview workspace\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"Welcome to CodeJIT Live Interview\");\n    }\n}")
                 .hostEmail(hostEmail)
                 .build();
 
+        String hostUsername = (hostEmail != null && !hostEmail.isBlank()) ? hostEmail : "Interviewer";
         InterviewParticipant host = InterviewParticipant.builder()
                 .userId(hostUserId)
-                .username(hostEmail != null ? hostEmail : "Host")
+                .username(hostUsername)
                 .role("INTERVIEWER")
                 .online(true)
                 .build();
@@ -86,7 +87,7 @@ public class InterviewService {
         return rooms.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public InterviewResponse getInterviewById(Long id) {
         InterviewRoom room = interviewRepository.findByIdWithParticipants(id)
                 .or(() -> interviewRepository.findById(id))
@@ -110,17 +111,26 @@ public class InterviewService {
                 .orElseThrow(() -> new ResourceNotFoundException("Interview room not found with code: " + shareCode));
 
         String username = (userEmail != null && !userEmail.isBlank()) ? userEmail : "Candidate";
-        boolean alreadyParticipant = participantRepository.findByInterviewRoomIdAndUsername(room.getId(), username).isPresent();
+        boolean isHost = room.getHostEmail() != null && room.getHostEmail().equalsIgnoreCase(username);
+        String assignedRole = isHost ? "INTERVIEWER" : "CANDIDATE";
 
-        if (!alreadyParticipant) {
+        InterviewParticipant existing = participantRepository.findByInterviewRoomIdAndUsername(room.getId(), username).orElse(null);
+
+        if (existing == null) {
             InterviewParticipant participant = InterviewParticipant.builder()
                     .userId(userId)
                     .username(username)
-                    .role("CANDIDATE")
+                    .role(assignedRole)
                     .online(true)
                     .build();
             room.addParticipant(participant);
             interviewRepository.save(room);
+        } else {
+            if (isHost && !"INTERVIEWER".equals(existing.getRole())) {
+                existing.setRole("INTERVIEWER");
+            }
+            existing.setOnline(true);
+            participantRepository.save(existing);
         }
 
         if (room.getStatus() == InterviewStatus.SCHEDULED) {
@@ -209,4 +219,3 @@ public class InterviewService {
                 .build();
     }
 }
-

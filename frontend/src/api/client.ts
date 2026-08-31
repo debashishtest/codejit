@@ -42,6 +42,7 @@ export const api = {
   joinAssessment: (code: string) => request<void>(`/assessments/join/${encodeURIComponent(code)}`, { method: 'POST' }),
   startAssessment: (id: number) => request<void>(`/assessments/${id}/start`, { method: 'POST' }),
   run: (assessmentId: number, questionId: number, payload: CodeRequest) => request<RunResponse>(`/assessments/${assessmentId}/questions/${questionId}/run`, { method: 'POST', body: JSON.stringify(payload) }),
+  executeCode: (payload: CodeRequest) => request<RunResponse>('/execution/run', { method: 'POST', body: JSON.stringify(payload) }),
   submit: (assessmentId: number, questionId: number, payload: CodeRequest) => request<SubmissionResponse>(`/assessments/${assessmentId}/questions/${questionId}/submit`, { method: 'POST', body: JSON.stringify(payload) }),
   submission: (id: number) => request<SubmissionResponse>(`/submissions/${id}`),
   interviews: () => request<Interview[]>('/interviews'),

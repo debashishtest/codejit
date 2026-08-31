@@ -17,6 +17,12 @@ public class ExecutionController {
         this.submissionService = submissionService;
     }
 
+    @PostMapping("/api/v1/execution/run")
+    public ResponseEntity<RunResponse> executeDirect(@RequestBody CodeRequest request) {
+        RunResponse response = submissionService.executeDirect(request);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/api/v1/assessments/{assessmentId}/questions/{questionId}/run")
     public ResponseEntity<RunResponse> runCode(
             @PathVariable Long assessmentId,
@@ -44,4 +50,3 @@ public class ExecutionController {
         return ResponseEntity.ok(response);
     }
 }
-

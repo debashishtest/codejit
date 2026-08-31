@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.codejit.execution.ExecutionControllerTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.285 s -- in com.codejit.execution.ExecutionControllerTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.212 s -- in com.codejit.execution.ExecutionControllerTest

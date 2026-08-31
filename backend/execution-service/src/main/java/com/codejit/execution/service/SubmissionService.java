@@ -1,5 +1,6 @@
 package com.codejit.execution.service;
 
+import com.codejit.common.dto.assessment.TestCaseDto;
 import com.codejit.common.dto.execution.*;
 import com.codejit.common.event.SubmissionResultEvent;
 import com.codejit.common.exception.BadRequestException;
@@ -27,7 +28,7 @@ public class SubmissionService {
     private final SubmissionRepository submissionRepository;
     private final KafkaSubmissionResultProducer kafkaResultProducer;
 
-    private static final long DEFAULT_TIMEOUT_MS = 3000L;
+    private static final long DEFAULT_TIMEOUT_MS = 4000L;
 
     public SubmissionService(
             CodeExecutionEngine executionEngine,
@@ -38,31 +39,57 @@ public class SubmissionService {
         this.kafkaResultProducer = kafkaResultProducer;
     }
 
-    @Transactional
-    public RunResponse runCode(Long assessmentId, Long questionId, CodeRequest request) {
+    public RunResponse executeDirect(CodeRequest request) {
         if (request.getSourceCode() == null || request.getSourceCode().isBlank()) {
             throw new BadRequestException("Source code cannot be empty");
         }
 
+        String language = request.getLanguage() != null ? request.getLanguage() : "java";
         List<TestResult> results = new ArrayList<>();
         long totalRuntime = 0;
+        boolean allPassed = true;
 
-        TestResult res = executionEngine.execute(
-                request.getLanguage() != null ? request.getLanguage() : "java",
-                request.getSourceCode(),
-                "",
-                "",
-                0,
-                DEFAULT_TIMEOUT_MS
-        );
-        results.add(res);
-        totalRuntime += res.getRuntimeMillis();
+        if (request.getTestCases() != null && !request.getTestCases().isEmpty()) {
+            int seq = 0;
+            for (TestCaseDto tc : request.getTestCases()) {
+                TestResult res = executionEngine.execute(
+                        language,
+                        request.getSourceCode(),
+                        tc.getInput() != null ? tc.getInput() : "",
+                        tc.getExpectedOutput() != null ? tc.getExpectedOutput() : "",
+                        seq++,
+                        DEFAULT_TIMEOUT_MS
+                );
+                results.add(res);
+                totalRuntime += res.getRuntimeMillis();
+                if (!res.isPassed()) {
+                    allPassed = false;
+                }
+            }
+        } else {
+            TestResult res = executionEngine.execute(
+                    language,
+                    request.getSourceCode(),
+                    request.getInput() != null ? request.getInput() : "",
+                    request.getExpectedOutput() != null ? request.getExpectedOutput() : "",
+                    0,
+                    DEFAULT_TIMEOUT_MS
+            );
+            results.add(res);
+            totalRuntime += res.getRuntimeMillis();
+            allPassed = res.isPassed();
+        }
 
         return RunResponse.builder()
                 .results(results)
                 .totalRuntimeMillis(totalRuntime)
-                .success(res.isPassed())
+                .success(allPassed)
                 .build();
+    }
+
+    @Transactional
+    public RunResponse runCode(Long assessmentId, Long questionId, CodeRequest request) {
+        return executeDirect(request);
     }
 
     @Transactional
@@ -90,8 +117,8 @@ public class SubmissionService {
         TestResult testResult = executionEngine.execute(
                 language,
                 request.getSourceCode(),
-                "",
-                "",
+                request.getInput() != null ? request.getInput() : "",
+                request.getExpectedOutput() != null ? request.getExpectedOutput() : "",
                 0,
                 DEFAULT_TIMEOUT_MS
         );
@@ -169,4 +196,3 @@ public class SubmissionService {
                 .build();
     }
 }
-
