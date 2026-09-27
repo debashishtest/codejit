@@ -18,42 +18,80 @@ CodeJIT is an enterprise-grade, microservices-powered platform designed for cond
 ```mermaid
 flowchart TB
     subgraph Client ["Client Layer"]
-        UI["CodeJIT Frontend SPA (Vite / React 19)\nhttp://localhost:5173"]
-    end
+        UI["CodeJIT Frontend SPA (Vite / React 19)
 
-    subgraph Edge ["Edge & API Gateway (:8080)"]
-        GW["Spring Cloud API Gateway\n- Stateless JWT Validation\n- Reactive CORS Filter\n- Dynamic Service Reverse Proxy"]
-    end
+http://localhost:5173"]
+end
+subgraph Edge ["Edge & API Gateway (:8080)"]
+    GW["Spring Cloud API Gateway
 
-    subgraph CoreServices ["Microservices Layer"]
-        AUTH["auth-service (:8081)\n• User Reg & Login\n• BCrypt Hashing\n• JWT Token Issuance"]
-        ASSESS["assessment-service (:8082)\n• Assessment Authoring\n• Question Bank & Test Cases\n• Share Code Lookup Cache"]
-        EXEC["execution-service (:8083)\n• Sandboxed Process Engine\n• Java & Python Runners\n• Kafka Consumer / Judge"]
-        INTV["interview-service (:8084)\n• Real-Time STOMP Broker\n• Editor & Board Live Sync\n• In-Room Chat Stream"]
-    end
+• Stateless JWT Validation
 
-    subgraph Middleware ["Middleware & Persistence Layer"]
-        REDIS[("Redis 7.2\n• Assessment Share Cache\n• WS Pub/Sub Cluster Backplane")]
-        KAFKA[("Apache Kafka 3.7 (KRaft)\n• codejit.submissions\n• codejit.submission-results")]
-        POSTGRES[("PostgreSQL 16 / H2\n• Microservice Datastores")]
-    end
+• Reactive CORS Filter
 
-    UI -->|HTTP REST / WebSocket STOMP| GW
+• Dynamic Service Reverse Proxy"]
+end
+subgraph CoreServices ["Microservices Layer"]
+    AUTH["auth-service (:8081)
 
-    GW -->|/api/v1/public/**, /api/v1/auth/**| AUTH
-    GW -->|/api/v1/assessments/**| ASSESS
-    GW -->|/api/v1/assessments/*/questions/*/(run|submit)| EXEC
-    GW -->|/api/v1/submissions/**| EXEC
-    GW -->|/api/v1/interviews/**| INTV
-    GW -->|/ws/** (WS STOMP Proxy)| INTV
+• User Reg & Login
 
-    AUTH --- POSTGRES
-    ASSESS --- POSTGRES
-    ASSESS --- REDIS
-    EXEC --- POSTGRES
-    EXEC --- KAFKA
-    INTV --- POSTGRES
-    INTV --- REDIS
+• BCrypt Hashing
+
+• JWT Token Issuance"]
+ASSESS["assessment-service (:8082)
+
+• Assessment Authoring
+
+• Question Bank & Test Cases
+
+• Share Code Lookup Cache"]
+EXEC["execution-service (:8083)
+
+• Sandboxed Process Engine
+
+• Java & Python Runners
+
+• Kafka Consumer / Judge"]
+INTV["interview-service (:8084)
+
+• Real-Time STOMP Broker
+
+• Editor & Board Live Sync
+
+• In-Room Chat Stream"]
+end
+subgraph Middleware ["Middleware & Persistence Layer"]
+    REDIS[("Redis 7.2
+
+• Assessment Share Cache
+
+• WS Pub/Sub Cluster Backplane")]
+KAFKA[("Apache Kafka 3.7 (KRaft)
+
+• codejit.submissions
+
+• codejit.submission-results")]
+POSTGRES[("PostgreSQL 16 / H2
+
+• Microservice Datastores")]
+end
+UI -->|"HTTP REST / WebSocket STOMP"| GW
+
+GW -->|"/api/v1/public/**, /api/v1/auth/**"| AUTH
+GW -->|"/api/v1/assessments/**"| ASSESS
+GW -->|"/api/v1/assessments/*/questions/*/(run|submit)"| EXEC
+GW -->|"/api/v1/submissions/**"| EXEC
+GW -->|"/api/v1/interviews/**"| INTV
+GW -->|"/ws/** (WS STOMP Proxy)"| INTV
+
+AUTH --- POSTGRES
+ASSESS --- POSTGRES
+ASSESS --- REDIS
+EXEC --- POSTGRES
+EXEC --- KAFKA
+INTV --- POSTGRES
+INTV --- REDIS
 ```
 
 ---
