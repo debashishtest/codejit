@@ -5,10 +5,6 @@ WORKDIR /build
 COPY pom.xml .
 COPY common-dto common-dto
 COPY api-gateway api-gateway
-COPY auth-service auth-service
-COPY assessment-service assessment-service
-COPY execution-service execution-service
-COPY interview-service interview-service
 
 RUN mvn clean package -pl api-gateway -am -DskipTests
 
