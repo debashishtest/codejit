@@ -15,6 +15,14 @@ The `interview-service` orchestrates live collaborative interview rooms, real-ti
 | `POST` | `/api/v1/interviews/{id}/end` | End interview session | Authenticated |
 | `GET` | `/api/v1/interviews/join/{code}` | Fetch interview room details by share code | Open / Authenticated |
 | `POST` | `/api/v1/interviews/join/{code}` | Join live interview room | Open / Authenticated |
+| `GET` | `/api/v1/ai-interviews` | List user's AI practice interview sessions | Authenticated |
+| `POST` | `/api/v1/ai-interviews` | Create and start an AI practice interview session | Authenticated |
+| `GET` | `/api/v1/ai-interviews/{id}` | Get AI interview state, turns, monitoring telemetry, and report | Authenticated |
+| `POST` | `/api/v1/ai-interviews/{id}/answer` | Submit (or skip) answer for AI evaluation and next question | Authenticated |
+| `POST` | `/api/v1/ai-interviews/{id}/hint` | Reveal progressive hint for current AI question | Authenticated |
+| `POST` | `/api/v1/ai-interviews/{id}/monitor-events` | Record real-time session monitoring telemetry | Authenticated |
+| `POST` | `/api/v1/ai-interviews/{id}/monitor-frame` | Analyze webcam frame for eye gaze & cheating alerts | Authenticated |
+| `POST` | `/api/v1/ai-interviews/{id}/complete` | Complete AI interview and generate holistic monitoring report | Authenticated |
 
 ### Real-Time WebSockets (STOMP)
 

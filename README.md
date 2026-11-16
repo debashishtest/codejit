@@ -222,6 +222,16 @@ npm run build
   - Subscribe: `/topic/interviews/{id}`
   - Send Events: `/app/interviews/{id}/event`
 
+### 🤖 AI Practice Interview & Monitoring (`/api/v1/ai-interviews`)
+- `GET /api/v1/ai-interviews`: List user's AI practice interview sessions.
+- `POST /api/v1/ai-interviews`: Create and start an AI practice interview session.
+- `GET /api/v1/ai-interviews/{id}`: Retrieve AI interview state, turns, monitoring telemetry, and final report.
+- `POST /api/v1/ai-interviews/{id}/answer`: Submit (or skip) an answer for AI evaluation and next-question generation.
+- `POST /api/v1/ai-interviews/{id}/hint`: Reveal progressive hint for the active question.
+- `POST /api/v1/ai-interviews/{id}/monitor-events`: Record real-time session monitoring telemetry.
+- `POST /api/v1/ai-interviews/{id}/monitor-frame`: Analyze webcam frame via AI Vision for eye gaze & cheating alerts.
+- `POST /api/v1/ai-interviews/{id}/complete`: Finalize session and generate complete AI monitoring & evaluation report.
+
 ---
 
 ## 📁 Repository Structure

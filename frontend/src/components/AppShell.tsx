@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Activity, Bell, CalendarClock, Code2, LayoutDashboard, LogOut, Menu, Settings, Terminal, Users, X } from 'lucide-react'
+import { Activity, Bell, Bot, CalendarClock, Code2, LayoutDashboard, LogOut, Menu, Settings, Terminal, Users, X } from 'lucide-react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 
-const links = [['/dashboard', 'Overview', LayoutDashboard], ['/interviews', 'Interview rooms', CalendarClock], ['/join', 'Join assessment', Terminal], ['/candidates', 'Candidates', Users], ['/activity', 'Activity', Activity]] as const
+const links = [['/dashboard', 'Overview', LayoutDashboard], ['/interviews', 'Interview rooms', CalendarClock], ['/ai-interviews', 'AI practice', Bot], ['/join', 'Join assessment', Terminal], ['/candidates', 'Candidates', Users], ['/activity', 'Activity', Activity]] as const
 
 export function AppShell() {
   const [open, setOpen] = useState(false)

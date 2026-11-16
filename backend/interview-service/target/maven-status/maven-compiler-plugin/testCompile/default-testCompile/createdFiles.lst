@@ -1,2 +1,6 @@
+com/codejit/interview/BuiltInAiInterviewEngineTest.class
+com/codejit/interview/AiInterviewControllerTest.class
+com/codejit/interview/AiInterviewIntegrationTest.class
 com/codejit/interview/InterviewServiceTest.class
 com/codejit/interview/InterviewControllerTest.class
+com/codejit/interview/AiLlmGatewayTest.class

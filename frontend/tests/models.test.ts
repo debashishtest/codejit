@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert'
-import type { Assessment, Interview, TestResult } from '../src/api/types.ts'
+import type { AiInterviewSession, Assessment, Interview, TestResult } from '../src/api/types.ts'
 
 describe('Domain Models and Type Contracts', () => {
   it('should construct valid Assessment data structure', () => {
@@ -61,6 +61,80 @@ describe('Domain Models and Type Contracts', () => {
 
     assert.strictEqual(result.passed, true)
     assert.strictEqual(result.runtimeMillis, 34)
+  })
+
+  it('should construct valid AiInterviewSession with evaluation and monitoring state', () => {
+    const aiSession: AiInterviewSession = {
+      id: 9,
+      title: 'System Design (SENIOR AI Practice)',
+      topic: 'System Design',
+      roleTitle: 'Staff Engineer',
+      difficulty: 'SENIOR',
+      mode: 'SYSTEM_DESIGN',
+      status: 'COMPLETED',
+      questionCount: 3,
+      durationMinutes: 30,
+      enableFollowUps: true,
+      strictMonitoring: true,
+      candidateEmail: 'dev@codejit.io',
+      currentTurnIndex: 2,
+      overallScore: 84,
+      recommendation: 'STRONG_HIRE',
+      aiProviderUsed: 'CODEJIT_AI_ENGINE',
+      monitoring: {
+        monitorStatus: 'OPTIMAL',
+        focusIntegrityScore: 95,
+        tabSwitchCount: 1,
+        windowBlurCount: 0,
+        pasteEventCount: 0,
+        idleWarningCount: 0,
+        eyeOffScreenCount: 0,
+        cheatingAlertCount: 1,
+        questionsAnswered: 3,
+        questionsSkipped: 0,
+        totalPlannedQuestions: 3,
+        elapsedSeconds: 840,
+        averageResponseSeconds: 90,
+        runningAverageScore: 84,
+        scoreTrend: 'IMPROVING',
+        liveObservation: 'Consistent strong depth',
+        alerts: ['1 tab switch(es) recorded during session']
+      },
+      turns: [
+        {
+          id: 101,
+          turnNumber: 1,
+          followUp: false,
+          category: 'SYSTEM_DESIGN',
+          topicTag: 'Rate Limiter',
+          difficulty: 'SENIOR',
+          questionText: 'Design a distributed rate limiter',
+          revealedHints: [],
+          totalHintsAvailable: 1,
+          expectedConcepts: ['rate limiting', 'cache'],
+          userAnswer: 'Use Redis Lua token bucket.',
+          status: 'EVALUATED',
+          evaluation: {
+            score: 84,
+            verdict: 'STRONG',
+            technicalAccuracyScore: 85,
+            completenessScore: 80,
+            clarityScore: 88,
+            problemSolvingScore: 83,
+            strengths: ['Covered atomic Lua execution'],
+            improvements: ['Discuss hot key sharding'],
+            missingConcepts: [],
+            feedback: 'Strong answer.'
+          }
+        }
+      ],
+      monitorEvents: [],
+      createdAt: '2026-11-11T10:00:00'
+    }
+
+    assert.strictEqual(aiSession.status, 'COMPLETED')
+    assert.strictEqual(aiSession.monitoring.focusIntegrityScore, 95)
+    assert.strictEqual(aiSession.turns[0].evaluation?.verdict, 'STRONG')
   })
 })
 

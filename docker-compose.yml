@@ -170,6 +170,9 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-codejit_secret}
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      AI_PROVIDER: ${AI_PROVIDER:-auto}
+      AI_API_KEY: ${AI_API_KEY:-}
+      AI_MODEL: ${AI_MODEL:-}
     depends_on:
       postgres:
         condition: service_healthy

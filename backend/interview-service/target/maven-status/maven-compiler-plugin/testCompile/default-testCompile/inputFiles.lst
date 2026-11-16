@@ -1,2 +1,6 @@
+/Users/dev/Desktop/codejit/backend/interview-service/src/test/java/com/codejit/interview/AiInterviewControllerTest.java
+/Users/dev/Desktop/codejit/backend/interview-service/src/test/java/com/codejit/interview/AiInterviewIntegrationTest.java
+/Users/dev/Desktop/codejit/backend/interview-service/src/test/java/com/codejit/interview/AiLlmGatewayTest.java
+/Users/dev/Desktop/codejit/backend/interview-service/src/test/java/com/codejit/interview/BuiltInAiInterviewEngineTest.java
 /Users/dev/Desktop/codejit/backend/interview-service/src/test/java/com/codejit/interview/InterviewControllerTest.java
 /Users/dev/Desktop/codejit/backend/interview-service/src/test/java/com/codejit/interview/InterviewServiceTest.java

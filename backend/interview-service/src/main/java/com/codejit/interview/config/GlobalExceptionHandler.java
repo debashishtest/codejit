@@ -3,6 +3,7 @@ package com.codejit.interview.config;
 import com.codejit.common.exception.BadRequestException;
 import com.codejit.common.exception.GlobalErrorResponse;
 import com.codejit.common.exception.ResourceNotFoundException;
+import com.codejit.common.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,18 @@ public class GlobalExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<GlobalErrorResponse> handleUnauthorized(UnauthorizedException ex, HttpServletRequest request) {
+        GlobalErrorResponse error = GlobalErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.FORBIDDEN.value())
+                .error(HttpStatus.FORBIDDEN.getReasonPhrase())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

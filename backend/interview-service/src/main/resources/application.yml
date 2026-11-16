@@ -1,5 +1,7 @@
 server:
   port: 8084
+  error:
+    include-message: always
 
 spring:
   application:
@@ -29,4 +31,12 @@ management:
     web:
       exposure:
         include: health,info,metrics
+
+ai:
+  interview:
+    provider: ${AI_PROVIDER:auto}
+    api-key: ${AI_API_KEY:${GEMINI_API_KEY:${OPENAI_API_KEY:}}}
+    model: ${AI_MODEL:}
+    base-url: ${AI_BASE_URL:}
+    timeout-seconds: ${AI_TIMEOUT_SECONDS:45}
 

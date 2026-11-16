@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { ArrowRight, CalendarPlus, Copy, Plus, Radio, Users } from 'lucide-react'
+import { ArrowRight, Bot, CalendarPlus, Copy, Plus, Radio, Users } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { api, type Interview } from '../api'
 import { notify } from '../notifications/notificationBus'
@@ -25,12 +25,20 @@ export function InterviewSchedulePage() {
             <h1 className="mt-3 text-3xl font-extrabold tracking-[-.06em] text-white">Schedule a live screen.</h1>
             <p className="mt-2 text-sm text-[#858a98]">Create a private room for real-time conversation, collaborative code, and judging.</p>
           </div>
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="flex items-center justify-center gap-2 bg-[#f3c969] px-4 py-3 text-sm font-extrabold text-[#17140d] transition hover:bg-[#e0b757]"
-          >
-            <Plus size={17} /> Schedule interview
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              to="/ai-interviews"
+              className="flex items-center justify-center gap-2 border border-[#f3c969]/40 bg-[#242015] px-4 py-3 text-sm font-extrabold text-[#f3c969] transition hover:border-[#f3c969]"
+            >
+              <Bot size={17} /> AI Practice Interview
+            </Link>
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="flex items-center justify-center gap-2 bg-[#f3c969] px-4 py-3 text-sm font-extrabold text-[#17140d] transition hover:bg-[#e0b757]"
+            >
+              <Plus size={17} /> Schedule interview
+            </button>
+          </div>
         </div>
 
         {showForm && (

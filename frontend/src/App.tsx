@@ -13,6 +13,8 @@ import { NotificationProvider } from './notifications/NotificationProvider'
 import { InterviewSchedulePage } from './pages/InterviewSchedulePage'
 import { InterviewJoinPage } from './pages/InterviewJoinPage'
 import { LiveInterviewPage } from './pages/LiveInterviewPage'
+import { AiInterviewHubPage } from './pages/AiInterviewHubPage'
+import { AiInterviewRoomPage } from './pages/AiInterviewRoomPage'
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
                 <Route path="/interviews/join" element={<InterviewJoinPage />} />
                 <Route path="/interviews/:id" element={<LiveInterviewPage />} />
                 <Route path="/interviews/:id/live" element={<LiveInterviewPage />} />
+                <Route path="/ai-interviews" element={<AiInterviewHubPage />} />
+                <Route path="/ai-interviews/:id" element={<AiInterviewRoomPage />} />
                 <Route path="/join" element={<JoinPage />} />
                 <Route path="/assessments/new" element={<CreateAssessmentPage />} />
                 <Route path="/assessments/:id" element={<AssessmentDetailPage />} />
